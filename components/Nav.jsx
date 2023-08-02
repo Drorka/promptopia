@@ -6,17 +6,17 @@ import Image from "next/image";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 function Nav() {
-	const isUserLoggedIn = false;
+	const { data: session } = useSession();
 	const [providers, setProviders] = useState(null);
 	const [toggleDropDown, setToggleDropDown] = useState(false);
 
 	useEffect(() => {
-		const setProviders = async () => {
+		const setUpProviders = async () => {
 			const response = await getProviders();
 			setProviders(response);
 		};
 
-		setProviders();
+		setUpProviders();
 	}, []);
 
 	return (
@@ -34,12 +34,12 @@ function Nav() {
 
 			{/* DESKTOP NAVIGATION */}
 			<div className="sm:flex hidden">
-				{isUserLoggedIn ? (
+				{session?.user ? (
 					<div className="flex gap-3 md:gap-5">
 						<Link href="/create-prompt" className="black_btn">
 							Create Post
 						</Link>
-						<button type="button" onclick={signOut} className="outline_btn">
+						<button type="button" onClick={signOut} className="outline_btn">
 							Sign Out
 						</button>
 						<Link href="/profile">
@@ -71,7 +71,7 @@ function Nav() {
 
 			{/* MOBILE NAVIGATION */}
 			<div className="sm:hidden flex relative">
-				{isUserLoggedIn ? (
+				{session?.user ? (
 					<div className="flex">
 						<Image
 							src="/assets/images/logo.svg"
