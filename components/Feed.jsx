@@ -4,17 +4,13 @@ import React, { useEffect, useState } from "react";
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
-	function handleEdit() {}
-	function handleDelete() {}
 	return (
 		<div className="mt-16 prompt_layout">
 			{data.map((post) => (
 				<PromptCard
-					key={post.id}
+					key={post._id}
 					post={post}
 					handleTagClick={handleTagClick}
-					handleEdit={handleEdit}
-					handleDelete={handleDelete}
 				/>
 			))}
 		</div>
